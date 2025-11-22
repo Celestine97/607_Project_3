@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Generated data and outputs
+*.pkl
+*.pdf
+*.png
+*.csv
+
+# Data directories
+generated_data/
+figures/
+simulation_summary/
