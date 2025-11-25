@@ -63,7 +63,7 @@ def hochberg_method(pvalues, alpha=0.05):
     sorted_indices = np.argsort(pvalues)
     sorted_pvalues = pvalues[sorted_indices]
     
-    # Find largest i where P_(i) <= i*alpha/(m+1-i)
+    # Find largest i where P_(i) <= alpha/(m+1-i)
     k = 0
     for i in range(m, 0, -1):
         if sorted_pvalues[i-1] <= 1 * alpha / (m + 1 - i):
