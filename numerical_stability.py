@@ -1,7 +1,7 @@
 
 import numpy as np
 
-# Optional: Use log-space for extreme p-values
+# log-space for extreme p-values
 def compute_pvalues_stable(test_statistic):
     """Numerically stable p-value computation using log-space"""
     from scipy.special import log_ndtr
@@ -14,21 +14,3 @@ def compute_pvalues_stable(test_statistic):
     
     pvalues = np.exp(log_pvalues)
     return pvalues
-
-def compute_power(rejections, true_nulls):
-    """
-    Compute average power.
-    
-    Returns NaN when n_false_nulls=0 (all hypotheses are null),
-    which is mathematically correct since power is undefined
-    in this case.
-    """
-    false_nulls = ~true_nulls
-    n_false_nulls = false_nulls.sum()
-    
-    if n_false_nulls == 0:
-        return np.nan  # Undefined when no alternatives exist
-    
-    true_positives = (rejections & false_nulls).sum()
-    power = true_positives / n_false_nulls
-    return power
