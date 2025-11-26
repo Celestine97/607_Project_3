@@ -200,3 +200,7 @@ with Pool(processes=n_cpus) as pool:
 - **Vectorization:** it always helps a lot, but for this simulation, since we are using relatively small vectors, so it is not help speeding up, but I will always try to vectorize the code.
 
 - **Parallelization:** Very effective for this simulation, and is surprisingly easy.
+
+## 7. Test
+
+can be found in `test_regression.py`

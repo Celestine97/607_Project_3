@@ -46,13 +46,34 @@ visualizations:
 	python run_visualization.py
 	@echo "Figures generated"
 
-profiling:
+profile:
 	@echo " "
 	@echo "Baseline profiling..."
 	@echo " "
 	python baseline_profile.py
 	snakeviz profile_stats.prof
 	python visualize _profile.py
+
+complexity:
+	@echo " "
+	@echo "Running complexity analysis..."
+	@echo " "
+	python complexity_analysis.py
+	@echo "Complexity analysis complete"
+
+benchmark:
+	@echo " "
+	@echo "Running benchmark comparisons..."
+	@echo " "
+	python optimizations_comparison.py
+	@echo "Benchmarking complete"
+
+parallel:
+	@echo " "
+	@echo "Running parallel simulations..."
+	@echo " "
+	python simulation_parallel.py
+	@echo "Parallel simulations complete"
 
 # Clean generated files
 clean:
