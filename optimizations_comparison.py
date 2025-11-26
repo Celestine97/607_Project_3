@@ -161,7 +161,7 @@ def create_optimization_plot(times_pval_orig, times_pval_opt,
              linewidth=2, markersize=8, color='orange')
     ax1.set_xlabel('Number of Hypotheses (m)', fontweight='bold')
     ax1.set_ylabel('Runtime (per replication)', fontweight='bold')
-    ax1.set_title('P-value Computation)', fontweight='bold')
+    ax1.set_title('P-value Computation', fontweight='bold')
     ax1.legend()
     ax1.grid(True, alpha=0.3)
     ax1.set_xscale('log')
@@ -208,7 +208,7 @@ def create_optimization_plot(times_pval_orig, times_pval_opt,
 
 
 if __name__ == "__main__":
-    m_values = [64, 128, 256, 512, 1024, 2048, 4096]
+    m_values = [4, 32, 64, 128, 256, 512, 1024, 2048, 4096]
     m1_values = m_values  # for generate_alternative_means
 
     times_pval_orig, times_pval_opt, _ = compare_pvalue_computation(m_values)

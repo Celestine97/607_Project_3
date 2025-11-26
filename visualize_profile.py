@@ -55,7 +55,7 @@ def get_component_stats(stats):
 
     return component_times
 
-def create_visualizations(profile_file='profile_stats.prof', output_dir='.'):
+def create_visualizations(profile_file='profile_stats.prof', output_path = 'profile_visualization.png'):
     """Create component-level timing and distribution visualizations"""
 
     stats = load_profile_stats(profile_file)
@@ -131,10 +131,10 @@ def create_visualizations(profile_file='profile_stats.prof', output_dir='.'):
     plt.tight_layout()
 
     # Save the figure
-    output_path = Path(output_dir) / 'profile_visualization.png'
     plt.savefig(output_path, dpi=200, bbox_inches='tight')
     print(f"Visualization saved to: {output_path}")
     plt.show()
 
 if __name__ == "__main__":
-    create_visualizations('profile_stats.prof')
+   create_visualizations(profile_file='profile_stats.prof', output_path = 'profile_visualization.png')
+   create_visualizations(profile_file='profile_stats_opt.prof', output_path = 'profile_visualization_opt.png')

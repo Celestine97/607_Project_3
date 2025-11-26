@@ -111,6 +111,9 @@ else:
 ## 3. Numerical Stability
 
 ### 3.1 Extreme p value computation - use log scale
+
+(not implemented in the simulation, because under the original setting, the current method is very stable; and usually we don't have such extreme p-values)
+
 **Improved Version:**
 ```python
 # Lower-level C implementation
@@ -136,5 +139,64 @@ Generally we can implement LogSumExp trick to make key steps more stable; but in
 ---
 
 ## 4. Performance Impact
+### Single Operation Performance
+![Optimization Visualization](optimization_comparison.png)
 
+- **Up left**: p-value computation comparison
+- **Up right**: alternative means generation comparison
+- **Down left**: Hochberg method comparison
+- **Down right**: Benjamini-Hochberg method comparison
 
+### Overall Profiling (without configuration parallelization)
+**Single Replication Performance Comparison**
+![Original Performance](profile_visualization.png)
+![Optimized Performance](profile_visualization_opt.png)
+
+The two figures show the profiling results for the single replication: the above one is the original version, and the second plot is the optimized one.
+
+The vectorized Hochberge and BH method are slower, because the total number of hypothesis is small here($m=32$). The new function of p-value comparison speeds up significantly.
+
+**Full Simulation Runtime**
+Total runtime before: 36.1698046250 seconds
+Total runtime after: 27.4839101251 seconds
+
+However, the overall improvement for the full simulation is not satisfactory.
+
+## 5. Parallelization
+
+Note that at each configuration, the simulation runs 20,000 replications sequentially, and we have in total 60 independent configurations ($5 \text{m values} \times 4 \text{null proportions} \times 3 \text{distributions}$). So we can consider parallelize 60 configurations across CPUs.
+
+```python
+# simulation_parallel.py
+# Prepare all configuration arguments for parallel execution
+config_args = []
+for m in m_values:
+    base_data = base_data_cache[m]
+    for null_prop in null_proportions:
+        for dist in distributions:
+            config_args.append((
+                m, null_prop, dist, base_data,
+                base_seed, L_setting, alpha_setting, n_reps
+            ))
+
+total = len(config_args)
+print(f"\n Running {total} configurations in parallel...")
+
+# Run all configurations in parallel across CPUs
+with Pool(processes=n_cpus) as pool:
+    results_list = list(tqdm(
+        pool.imap_unordered(run_single_configuration, config_args),
+            total=total,
+            desc="Simulations",
+            ncols=80
+        ))
+```
+
+**Total time: 5.9518945001 seconds** - Significant Speed up
+
+## 6. Summary - lessons learned
+- **p-value computation: lower level function implementation:** didn't expected that `stats.norm.cdf` was the most time-consuming function in single replication, and replacing it with lower level functions worked really well. We discussed about directly using C/C++ code in some computational bottlenecks at STATS 810, and at that time I thought I would hardly ever choose this approach. Now I really realized that it helped a lot, and could be of relatively low efforts.
+
+- **Vectorization:** it always helps a lot, but for this simulation, since we are using relatively small vectors, so it is not help speeding up, but I will always try to vectorize the code.
+
+- **Parallelization:** Very effective for this simulation, and is surprisingly easy.
