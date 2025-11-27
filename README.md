@@ -37,7 +37,7 @@ project2(original)/
 │
 ├── config.py                    # Configuration management
 ├── data_generation.py           # Data generating functions
-
+|
 ├── simulation.py                # Simulation functions
 ├── performance_metrics.py       # Power and FDR computation
 ├── visualization.py             # Plotting functions
