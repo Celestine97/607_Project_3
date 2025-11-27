@@ -52,7 +52,7 @@ Profiling was performed using `cProfile` on a baseline simulation:
 
 ### Visualization
 
-![Profiler Visualization](profile_visualization.png)
+![Profiler Visualization](figures/profile_visualization.png)
 
 - **Left**: Per-call timing for each component
 - **Right**: Cumulative time distribution across all components
@@ -80,7 +80,7 @@ Fitted Model for  `benjamini_hochberg_method`: `time = a·m·log(m)`
 Fitted Model for single run: `time = C + a·m·log(m)`
 
 
-![Plot](complexity_analysis.png)
+![Plot](figures/complexity_analysis.png)
 
 ---
 

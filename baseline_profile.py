@@ -6,7 +6,7 @@ from config import create_config
 from data_generation import generate_base_data
 from simulation import run_simulation_with_base_data
 import cProfile
-import pstats
+import os
 
 # optimized version
 from simulation_optimized import run_simulation_with_base_data as run_simulation_with_base_data_opt
@@ -31,14 +31,19 @@ def run_simulation_for_profiling_opt():
 
 if __name__ == "__main__":
 
+    output_dir = 'profiles/'
+    os.makedirs(output_dir, exist_ok=True)
+    # Baseline version
     profiler = cProfile.Profile()
     profiler.enable()
     
     results = run_simulation_for_profiling()
     
     profiler.disable()
-    # Save to file
-    profiler.dump_stats('profile_stats.prof')
+
+
+    profiler.dump_stats(os.path.join(output_dir, 'profile_stats.prof'))
+    print(f"Baseline profiling data saved to {os.path.join(output_dir, 'profile_stats.prof')}")
 
     # Optimized version
     profiler_opt = cProfile.Profile()
@@ -46,4 +51,4 @@ if __name__ == "__main__":
     results_opt = run_simulation_for_profiling_opt()
     profiler_opt.disable()
     # Save to file
-    profiler_opt.dump_stats('profile_stats_opt.prof')
+    profiler_opt.dump_stats(os.path.join(output_dir, 'profile_stats_opt.prof'))

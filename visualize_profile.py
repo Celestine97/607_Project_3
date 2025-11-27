@@ -136,5 +136,5 @@ def create_visualizations(profile_file='profile_stats.prof', output_path = 'prof
     plt.show()
 
 if __name__ == "__main__":
-   create_visualizations(profile_file='profile_stats.prof', output_path = 'profile_visualization.png')
-   create_visualizations(profile_file='profile_stats_opt.prof', output_path = 'profile_visualization_opt.png')
+   
+   create_visualizations(profile_file='profiles/profile_stats.prof', output_path = 'figures/profile_visualization.png')

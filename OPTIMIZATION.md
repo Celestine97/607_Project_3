@@ -140,7 +140,7 @@ Generally we can implement LogSumExp trick to make key steps more stable; but in
 
 ## 4. Performance Impact
 ### Single Operation Performance
-![Optimization Visualization](optimization_comparison.png)
+![Optimization Visualization](figures/optimization_comparison.png)
 
 - **Up left**: p-value computation comparison
 - **Up right**: alternative means generation comparison
@@ -149,16 +149,16 @@ Generally we can implement LogSumExp trick to make key steps more stable; but in
 
 ### Overall Profiling (without configuration parallelization)
 **Single Replication Performance Comparison**
-![Original Performance](profile_visualization.png)
-![Optimized Performance](profile_visualization_opt.png)
+![Original Performance](figures/profile_visualization.png)
+![Optimized Performance](figures/profile_visualization_opt.png)
 
 The two figures show the profiling results for the single replication: the above one is the original version, and the second plot is the optimized one.
 
 The vectorized Hochberge and BH method are slower, because the total number of hypothesis is small here($m=32$). The new function of p-value comparison speeds up significantly.
 
-**Full Simulation Runtime**
-Total runtime before: 36.1698046250 seconds
-Total runtime after: 27.4839101251 seconds
+## **Full Simulation Runtime**
+**Total runtime before: 36.1698046250 seconds**
+**Total runtime after: 27.4839101251 seconds**
 
 However, the overall improvement for the full simulation is not satisfactory.
 

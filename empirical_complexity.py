@@ -9,6 +9,7 @@ Analyzes:
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+import os
 from scipy.optimize import curve_fit
 
 from config import create_config
@@ -178,7 +179,7 @@ def empirical_complexity_BH_method():
     }
 
 
-def create_complexity_plots():
+def create_complexity_plots(output_dir='figures/'):
     """Create comprehensive visualization with 3 subplots: p-value, total runtime, and BH method"""
 
     # Get data from all three functions
@@ -278,9 +279,11 @@ def create_complexity_plots():
              bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
     plt.tight_layout()
-    plt.savefig('complexity_analysis.png', dpi=300, bbox_inches='tight')
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, 'complexity_analysis.png')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
     print("\n Plot saved as 'complexity_analysis.png'")
     plt.show()
 
 if __name__ == "__main__":
-    create_complexity_plots()
+    create_complexity_plots(output_dir='figures/')

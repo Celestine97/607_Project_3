@@ -4,6 +4,7 @@ compare original vs optimized implementations.
 
 import numpy as np
 import time
+import os
 import matplotlib.pyplot as plt
 
 # original implementations
@@ -148,7 +149,7 @@ def create_optimization_plot(times_pval_orig, times_pval_opt,
                              times_means_orig, times_means_opt,
                              times_bh_orig, times_bh_opt,
                              times_hoch_orig, times_hoch_opt,
-                             m_values):
+                             m_values, output_dir='figures/'):
     """Create visualization of optimized results"""
 
     # 4 subplots (2x2 grid)
@@ -203,7 +204,9 @@ def create_optimization_plot(times_pval_orig, times_pval_opt,
     ax4.set_yscale('log')
 
     plt.tight_layout()
-    plt.savefig('optimization_comparison.png', dpi=300, bbox_inches='tight')
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, 'optimization_comparison.png')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.show()
 
 
@@ -220,4 +223,4 @@ if __name__ == "__main__":
                              times_means_orig, times_means_opt,
                              times_bh_orig, times_bh_opt,
                              times_hoch_orig, times_hoch_opt,
-                             m_values)
+                             m_values, output_dir='figures/')
